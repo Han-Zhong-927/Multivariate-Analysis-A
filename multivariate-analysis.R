@@ -58,27 +58,14 @@ fviz_pca_var(pca, axes = c(2,3), col.var = "cos2", gradient.cols = c("#00AFBB", 
   
 
 # INDIVIDUAL ANALYSIS
-fviz_pca_ind(pca, col.ind = "cos2", 
-             invisible = "ind.sup", # SHOULD WE SHOW TEST INDIVIDUALS?
-             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
-             geom = c("point"))
+fviz_pca_ind(pca, col.ind = "cos2", invisible = "ind.sup", gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),geom = c("point"))
 
-fviz_pca_ind(pca, axes = c(2,3), col.ind = "cos2", 
-             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
-             geom = c("point"))
+fviz_pca_ind(pca, axes = c(2,3), col.ind = "cos2", gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), geom = c("point"))
 
 fviz_pca_ind(pca, geom = c("point"), col.ind = factor(train$success), invisible = "ind.sup")
 
 # BIPLOT
-fviz_pca_biplot(pca, repel = TRUE,
-                geom = c("point"),
-                invisible = "ind.sup", 
-                col.var = "black", 
-                col.ind = "red"  
-)
-
-
-
+fviz_pca_biplot(pca, repel = TRUE,geom = c("point"),invisible = "ind.sup", col.var = "black", col.ind = "red")
 
 Psi <- pca$ind$coord
 Phi <- pca$var$coord
@@ -141,7 +128,7 @@ barplot(h2$height[(length(h2$height)-15):length(h2$height)],
         xlab = "Iterations", ylab = "Height")
 abline(v=15.7, col = "red")
 
-nc <- 4   # for instance
+nc <- 4   
 c2 <- cutree(h2,nc)
 cdg <- aggregate((diag(freq/sum(freq)) %*% as.matrix(cdclas)),list(c2),sum)[,2:(sc+1)]  # WHY WEIGHT
 
@@ -176,9 +163,6 @@ rbind(head(catdes.res$quanti$green, 4), tail(catdes.res$quanti$green, 4))
 
 catdes.res$category$blue[1:4,]
 rbind(head(catdes.res$quanti$blue, 2), tail(catdes.res$quanti$blue, 2))
-
-
-
 
 
 
@@ -243,12 +227,12 @@ varImpPlot(model.rf, main="Variable importance (Random Forest)")
 
 # Confusion matrix after using the model to predict the test set.
 prediction.rf <- predict(model.rf, newdata=test)
-(tb <- table(prediction.rf, test$success))
+tb <- table(prediction.rf, test$success)
 
-(accuracy.rf <- sum(diag(tb)) / sum(tb))
-(precision.p <- tb[2,2] / sum(tb[,2]))
+accuracy.rf <- sum(diag(tb)) / sum(tb)
+precision.p <- tb[2,2] / sum(tb[,2])
 precision.n <- tb[1,1] / sum(tb[,1])
-(precision.rf <- (precision.p + precision.n) / 2)
+precision.rf <- (precision.p + precision.n) / 2
 
 
 
@@ -262,8 +246,8 @@ pred.rf <- prediction(predict(model.rf, type="prob", newdata=test)[,2], test$suc
 perf.dt <- performance(pred.dt, "tpr", "fpr")
 perf.rf <- performance(pred.rf, "tpr", "fpr")
 
+## ROC curves
 plot(perf.dt, col="red", main="ROC Curve comparison")
 plot(perf.rf, add = TRUE)
-legend(0, 1, legend=c("Decision Tree", "Random Forest"),
-       col=c("red", "black"), lty=1:2, cex=1)
+legend(0, 1, legend=c("Decision Tree", "Random Forest"),col=c("red", "black"), lty=1:2, cex=1)
 
