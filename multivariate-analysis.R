@@ -78,9 +78,7 @@ fviz_pca_biplot(pca, repel = TRUE,
 )
 
 
-# HIDDEN LATENT FACTORS
 
-# VARIMAX ROTATION
 
 Psi <- pca$ind$coord
 Phi <- pca$var$coord
@@ -124,22 +122,6 @@ plot(Psi.rot)
 plot(Psi[,c(2,3)])
 plot(Psi.rot[,c(2,3)])
 
-
-# A latent factor is easily interpreted when it just correlates with some variables and it is uncorrelated with the remaining. 
-# Principal Components are the factors explaining at most the total variance of the original cloud of points.
-# But, not necessarily they clearly identify the underling factors existing in your data.
-
-# In our case though, the better explained variables clearly correlate with the principal components, and therefore no rotation of
-# the dimensions is needed. Interpret principal components...
-
-
-
-
-# CLUSTERING OF LARGE DATA SETS
-# FIRST 2 KMEANS WITH K=14
-
-
-## Decide whether to use the original cloud of individuals or the rotated one. 
 
 n1 <- 14
 k1 <- kmeans(Psi.rot,n1)
